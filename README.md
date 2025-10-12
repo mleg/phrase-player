@@ -3,7 +3,7 @@
 This is a simple web app that plays an audio file **phrase by phrase** using a matching **subtitle** file in SRT format.  
 It is intended for **language learners**.
 
-> It's similar to [WorkAudioBook](WorkAudioBook) which I used previously.  
+> It's similar to [WorkAudioBook](http://workaudiobook.com/) which I used previously.  
 > But WorkAudioBook is an old Windows-only app with a somewhat complex UX. Anyway huge thanks to the author.
 
 <!-- toc -->
