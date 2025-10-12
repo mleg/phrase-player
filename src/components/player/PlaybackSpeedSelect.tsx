@@ -50,9 +50,18 @@ export const PlaybackSpeedSelect: React.FC<Props> = observer(
         eventListenerOptions: { capture: true },
       }
     );
-    useHotkeys("ArrowUp", speed.increase, {
-      enabled: !player.speed.modal.visible,
-    });
+    useHotkeys(
+      "ArrowUp",
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        speed.increase();
+      },
+      {
+        enabled: !player.speed.modal.visible,
+        eventListenerOptions: { capture: true },
+      }
+    );
 
     return (
       <div
