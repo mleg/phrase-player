@@ -1,0 +1,20 @@
+.firstCell::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* Extend left and right beyond the cell to cover the entire row */
+  left: -100vw; /* Adjust as needed, '100vw' is often sufficient */
+  right: -100vw;
+  background-color: transparent; /* Default state */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  z-index: -1;
+}
+
+.firstCell[data-active]::before {
+  background-color: var(--color-sky-100);
+}
+
+.row:hover .firstCell::before {
+  background-color: var(--color-yellow-100);
+}

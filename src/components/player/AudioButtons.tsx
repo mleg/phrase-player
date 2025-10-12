@@ -1,0 +1,141 @@
+import { cn } from "@/lib/utils";
+import { useStore } from "@/stores/StoreContext";
+import {
+  ChevronFirst,
+  ChevronLast,
+  ChevronLeft,
+  ChevronRight,
+  Ellipsis,
+  Pause,
+  Play,
+  Repeat1,
+} from "lucide-react";
+import { observer } from "mobx-react-lite";
+import { useHotkeys } from "react-hotkeys-hook";
+import { ControlButton } from "./AudioButton";
+import { PlaybackSpeedSelect } from "./PlaybackSpeedSelect";
+
+interface Props {
+  className?: string;
+}
+
+export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
+  props
+) {
+  const { player, phrases } = useStore();
+
+  useHotkeys(
+    "space",
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      player.playPhraseAgain();
+    },
+    { eventListenerOptions: { capture: true } }
+  );
+
+  useHotkeys("P", player.togglePlay);
+
+  useHotkeys(
+    "ArrowRight",
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      phrases.next();
+    },
+    {
+      enabled: !player.speed.modal.visible,
+      eventListenerOptions: { capture: true },
+    }
+  );
+
+  useHotkeys(
+    "ArrowLeft",
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      phrases.prev();
+    },
+    {
+      enabled: !player.speed.modal.visible,
+      eventListenerOptions: { capture: true },
+    }
+  );
+
+  useHotkeys("Home", phrases.first, { enabled: !player.speed.modal.visible });
+
+  useHotkeys("End", phrases.last, { enabled: !player.speed.modal.visible });
+
+  return (
+    <div
+      className={cn(
+        "grid grid-flow-col auto-cols-min grid-rows-2 sm:flex gap-4",
+        props.className
+      )}
+    >
+      <ControlButton
+        disabled={phrases.isPrevDisabled}
+        onClick={phrases.first}
+        hotkey="Home"
+        className="order-2 sm:order-none"
+      >
+        <ChevronFirst />
+      </ControlButton>
+
+      <ControlButton
+        disabled={phrases.isPrevDisabled}
+        onClick={phrases.prev}
+        hotkey="⇽"
+        className="order-1 sm:order-none"
+      >
+        <ChevronLeft />
+      </ControlButton>
+
+      <ControlButton
+        disabled={!phrases.playbackEnabled}
+        onClick={player.playPhraseAgain}
+        hotkey="Space"
+        className="order-3 sm:order-none"
+      >
+        <Repeat1 />
+      </ControlButton>
+
+      <ControlButton
+        disabled={!phrases.playbackEnabled}
+        onClick={player.togglePlay}
+        hotkey="P"
+        className="order-5 sm:order-none"
+      >
+        {player.isPlaying ? <Pause /> : <Play />}
+      </ControlButton>
+
+      <ControlButton
+        disabled={phrases.isNextvDisabled}
+        onClick={phrases.next}
+        hotkey="⇾"
+        className="order-7 sm:order-none"
+      >
+        <ChevronRight />
+      </ControlButton>
+
+      <ControlButton
+        disabled={phrases.isNextvDisabled}
+        onClick={phrases.last}
+        hotkey="End"
+        className="order-8 sm:order-none"
+      >
+        <ChevronLast />
+      </ControlButton>
+
+      <PlaybackSpeedSelect className="order-6 sm:order-none" />
+
+      <ControlButton
+        disabled={phrases.list.length === 0}
+        onClick={phrases.select.show}
+        className="order-4 sm:order-none"
+      >
+        <Ellipsis />
+      </ControlButton>
+    </div>
+  );
+});
