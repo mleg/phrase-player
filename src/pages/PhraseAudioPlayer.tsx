@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import React from "react";
 import { useEffectOnce } from "react-use";
 
-import { AppHeader } from "@/common/AppHeader";
+import { AppHeader } from "@/components/common/AppHeader";
 import { PageContainer } from "@/components/common/PageContainer";
 import { Audio } from "@/components/player/Audio";
 import { AudioButtons } from "@/components/player/AudioButtons";
