@@ -41,9 +41,13 @@ Choose this folder with `Choose media folder` button and the rest should be self
 ## Where Do I Get Subtitles?
 
 That’s a broad topic.  
-I generate them with [whisper.cpp](https://github.com/ggml-org/whisper.cpp).
+I generate them with [whisper.cpp](https://github.com/ggml-org/whisper.cpp).  
+whisper.cpp can be used right in the browser without complicated setup:  
+[Whisper Web](https://huggingface.co/spaces/Xenova/whisper-web)
+and [Minimal whisper.cpp example running fully in the browser](https://ggml.ai/whisper.cpp/)
 
-Videos like movies and series often have subtitles. This app accepts only audio files but you can extract audio easily with _FFmpeg_:
+Videos like movies and series often have subtitles. This app accepts only audio files
+but you can extract audio easily with _FFmpeg_:
 
 ```sh
 ffmpeg -i input.mp4 output.mp3
@@ -57,4 +61,5 @@ ffmpeg -i input.vtt output.srt
 
 ## Contributing
 
-Contributions are welcome. However, I’d like to keep this app simple and focused — not a “kitchen sink” solution. If you want to add features like subtitle editing, consider building a dedicated app instead.
+Contributions are welcome. However, I’d like to keep this app simple and focused — not a “kitchen sink” solution.
+If you want to add features like subtitle editing, consider building a dedicated app instead.
