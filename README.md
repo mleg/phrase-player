@@ -1,5 +1,7 @@
 # Phrase-by-Phrase Audio Player
 
+🇬🇧 English | 🇷🇺 [Русский](./README.ru.md)
+
 App itself: <https://mleg.github.io/phrase-player/>
 
 <!-- toc -->
