@@ -70,7 +70,7 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
   return (
     <div
       className={cn(
-        "grid grid-flow-col auto-cols-min grid-rows-2 sm:flex gap-4",
+        "grid grid-flow-col auto-cols-fr grid-rows-2 sm:flex gap-4",
         props.className
       )}
     >
@@ -78,7 +78,7 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
         disabled={phrases.isPrevDisabled}
         onClick={phrases.first}
         hotkey="Home"
-        className="order-2 sm:order-none"
+        className="order-2"
       >
         <ChevronFirst />
       </ControlButton>
@@ -86,7 +86,7 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
         disabled={phrases.isPrevDisabled}
         onClick={phrases.prev}
         hotkey="⇽"
-        className="order-1 sm:order-none"
+        className="order-1"
       >
         <ChevronLeft />
       </ControlButton>
@@ -94,7 +94,7 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
         disabled={!phrases.playbackEnabled}
         onClick={player.playPhraseAgain}
         hotkey={t("navigation.hotkeys.space")}
-        className="order-3 sm:order-none"
+        className="order-3"
       >
         <Repeat1 />
       </ControlButton>
@@ -102,7 +102,7 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
         disabled={!phrases.playbackEnabled}
         onClick={player.togglePlay}
         hotkey="P"
-        className="order-5 sm:order-none"
+        className="order-5"
       >
         {player.isPlaying ? <Pause /> : <Play />}
       </ControlButton>
@@ -110,7 +110,7 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
         disabled={phrases.isNextDisabled}
         onClick={phrases.next}
         hotkey="⇾"
-        className="order-7 sm:order-none"
+        className="order-7"
       >
         <ChevronRight />
       </ControlButton>
@@ -118,7 +118,7 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
         disabled={phrases.isNextDisabled}
         onClick={phrases.last}
         hotkey="End"
-        className="order-8 sm:order-none"
+        className="order-8"
       >
         <ChevronLast />
       </ControlButton>
@@ -126,7 +126,7 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
       <ControlButton
         disabled={phrases.list.length === 0}
         onClick={phrases.select.show}
-        className="order-4 sm:order-none"
+        className="order-4"
       >
         <Ellipsis />
       </ControlButton>

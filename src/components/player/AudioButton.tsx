@@ -21,8 +21,13 @@ export const ControlButton: React.FC<Props> = observer(function AudioButton({
   ...props
 }) {
   return (
-    <div className={cn("flex flex-col items-center gap-2", className)}>
-      <Button size="lg" className="px-4" {...props}>
+    <div
+      className={cn(
+        "flex flex-col items-center gap-2 sm:order-none grow",
+        className
+      )}
+    >
+      <Button size="lg" className="px-4 w-full" {...props}>
         <IconLarge>{children}</IconLarge>
       </Button>
       {hotkey && <Kbd className="hidden sm:flex text-sm">{hotkey}</Kbd>}

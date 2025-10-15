@@ -76,7 +76,7 @@ export const PlaybackSpeedSelect: React.FC<Props> = observer(
       >
         <DropdownMenu open={speed.modal.visible} onOpenChange={speed.modal.set}>
           <DropdownMenuTrigger asChild>
-            <Button size="lg" className="px-4 relative">
+            <Button size="lg" className="px-4 max-sm:w-full relative">
               <div
                 data-name="speed-value"
                 className="hidden sm:block absolute left-0 right-0 -top-6 text-sm leading-none sm:leading-[1.5] text-center text-muted-foreground"
