@@ -1,6 +1,6 @@
 export const en = {
   app: {
-    title: "Phrase-by-Phrase Audio Player",
+    title: "Phrase Audio Player",
   },
   files: {
     choose_folder: "Choose media folder",
