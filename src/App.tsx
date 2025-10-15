@@ -3,7 +3,7 @@ import { PhraseAudioPlayer } from "./pages/PhraseAudioPlayer";
 import { PhrasesSelect } from "./pages/PhrasesSelect";
 import { useStore } from "./stores/StoreContext";
 
-export const AppLayout: React.FC = observer(function AppLayout() {
+export const App: React.FC = observer(function AppLayout() {
   const { phrases } = useStore();
   return (
     <>

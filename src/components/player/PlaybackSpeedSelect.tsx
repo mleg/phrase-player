@@ -9,9 +9,11 @@ import { cn } from "@/lib/utils";
 import { speedFormatValue } from "@/stores/player";
 import type { Preset } from "@/stores/speed-store";
 import { useStore } from "@/stores/StoreContext";
+import type { TFunction } from "i18next";
 import { Check, Gauge } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useTranslation } from "react-i18next";
 import { IconLarge } from "../common/IconLarge";
 import { Button } from "../ui/button";
 import { Kbd } from "../ui/kbd";
@@ -21,7 +23,7 @@ interface Props {
   className?: string;
 }
 
-const renderItem = (preset: Preset) => (
+const renderItem = (preset: Preset, t: TFunction) => (
   <DropdownMenuItem
     key={preset.value}
     onSelect={preset.onSelect}
@@ -29,13 +31,14 @@ const renderItem = (preset: Preset) => (
     className="pl-6 relative"
   >
     {preset.isChosen && <Check className="size-4 absolute left-1" />}
-    <span>{preset.value === 1 ? "Normal" : preset.value}</span>
+    <span>{preset.value === 1 ? t("player.normal") : preset.value}</span>
   </DropdownMenuItem>
 );
 
 export const PlaybackSpeedSelect: React.FC<Props> = observer(
   function PlaybackSpeedSelect(props) {
     const { player } = useStore();
+    const { t } = useTranslation();
     const { speed } = player;
 
     useHotkeys(
@@ -50,6 +53,7 @@ export const PlaybackSpeedSelect: React.FC<Props> = observer(
         eventListenerOptions: { capture: true },
       }
     );
+
     useHotkeys(
       "ArrowUp",
       (e) => {
@@ -94,7 +98,7 @@ export const PlaybackSpeedSelect: React.FC<Props> = observer(
           <DropdownMenuContent side="top" className="w-60 flex flex-col">
             <PlaybackSpeedSlider />
             <DropdownMenuSeparator />
-            {speed.presets.map(renderItem)}
+            {speed.presets.map((preset) => renderItem(preset, t))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

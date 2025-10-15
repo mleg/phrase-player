@@ -51,7 +51,7 @@ export class PhrasesStore {
   }
 
   @computed
-  get isNextvDisabled(): boolean {
+  get isNextDisabled(): boolean {
     return this.currentIndex === this.list.length - 1 || !this.playbackEnabled;
   }
 

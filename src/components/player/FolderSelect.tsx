@@ -5,9 +5,11 @@ import { useStore } from "@/stores/StoreContext";
 import { Folder } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import React, { type ChangeEvent } from "react";
+import { useTranslation } from "react-i18next";
 
 export const FolderSelect: React.FC = observer(function FolderSelect() {
   const { fileList } = useStore();
+  const { t } = useTranslation();
 
   const onFolderSelect = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -31,7 +33,7 @@ export const FolderSelect: React.FC = observer(function FolderSelect() {
       <Button asChild variant="secondary">
         <Label htmlFor="folder-input" className="flex items-center gap-2">
           <Folder className="size-6" />
-          {fileList.folderName ? null : <span>Choose media folder</span>}
+          {fileList.folderName ? null : <span>{t("files.choose_folder")}</span>}
         </Label>
       </Button>
       <span className="inline-flex items-center">{fileList.folderName}</span>

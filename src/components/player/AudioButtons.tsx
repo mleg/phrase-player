@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useTranslation } from "react-i18next";
 import { ControlButton } from "./AudioButton";
 import { PlaybackSpeedSelect } from "./PlaybackSpeedSelect";
 
@@ -23,6 +24,7 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
   props
 ) {
   const { player, phrases } = useStore();
+  const { t } = useTranslation();
 
   useHotkeys(
     "space",
@@ -63,7 +65,6 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
   );
 
   useHotkeys("Home", phrases.first, { enabled: !player.speed.modal.visible });
-
   useHotkeys("End", phrases.last, { enabled: !player.speed.modal.visible });
 
   return (
@@ -81,7 +82,6 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
       >
         <ChevronFirst />
       </ControlButton>
-
       <ControlButton
         disabled={phrases.isPrevDisabled}
         onClick={phrases.prev}
@@ -90,16 +90,14 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
       >
         <ChevronLeft />
       </ControlButton>
-
       <ControlButton
         disabled={!phrases.playbackEnabled}
         onClick={player.playPhraseAgain}
-        hotkey="Space"
+        hotkey={t("navigation.hotkeys.space")}
         className="order-3 sm:order-none"
       >
         <Repeat1 />
       </ControlButton>
-
       <ControlButton
         disabled={!phrases.playbackEnabled}
         onClick={player.togglePlay}
@@ -108,27 +106,23 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
       >
         {player.isPlaying ? <Pause /> : <Play />}
       </ControlButton>
-
       <ControlButton
-        disabled={phrases.isNextvDisabled}
+        disabled={phrases.isNextDisabled}
         onClick={phrases.next}
         hotkey="⇾"
         className="order-7 sm:order-none"
       >
         <ChevronRight />
       </ControlButton>
-
       <ControlButton
-        disabled={phrases.isNextvDisabled}
+        disabled={phrases.isNextDisabled}
         onClick={phrases.last}
         hotkey="End"
         className="order-8 sm:order-none"
       >
         <ChevronLast />
       </ControlButton>
-
       <PlaybackSpeedSelect className="order-6 sm:order-none" />
-
       <ControlButton
         disabled={phrases.list.length === 0}
         onClick={phrases.select.show}

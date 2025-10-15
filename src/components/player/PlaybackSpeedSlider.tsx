@@ -4,6 +4,7 @@ import { useStore } from "@/stores/StoreContext";
 import { delay } from "es-toolkit";
 import { observer } from "mobx-react-lite";
 import { useLayoutEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { DropdownMenuLabel } from "../ui/dropdown-menu";
 import { Slider } from "../ui/slider";
 
@@ -14,6 +15,7 @@ interface Props {
 export const PlaybackSpeedSlider: React.FC<Props> = observer(
   function PlaybackSpeedSlider(props) {
     const { player } = useStore();
+    const { t } = useTranslation();
     const { speed } = player;
 
     const ref = useRef<HTMLDivElement | null>(null);
@@ -34,7 +36,7 @@ export const PlaybackSpeedSlider: React.FC<Props> = observer(
         className={cn("flex flex-col gap-2", props.className)}
       >
         <div className="text-muted-foreground flex gap-2">
-          <span>Playback speed:</span>
+          <span>{t("player.speed")}:</span>
           <span>{speedFormatValue(speed.value)}</span>
         </div>
         <Slider
