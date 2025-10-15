@@ -15,17 +15,17 @@ const languages = [
   { code: "ru", name: "Русский", flag: "🇷🇺" },
 ];
 
+const findLang = (lang: string) =>
+  languages.find((item) => item.code === lang) ?? languages[0];
+
 export const LanguageSwitcher: React.FC = observer(function LanguageSwitcher() {
   const { i18n } = useTranslation();
-  const [lang, setLang] = useState(i18n.language);
+  const [lang, setLang] = useState(findLang(i18n.language));
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
-    setLang(lng);
+    setLang(findLang(lng));
   };
-
-  const currentLanguage =
-    languages.find((item) => item.code === lang) ?? languages[0];
 
   return (
     <DropdownMenu>
@@ -37,7 +37,7 @@ export const LanguageSwitcher: React.FC = observer(function LanguageSwitcher() {
             aria-label="language"
             className="text-lg absolute right-0 left-0 -bottom-6"
           >
-            {currentLanguage.flag}
+            {lang.flag}
           </span>
         </Button>
       </DropdownMenuTrigger>
