@@ -12,8 +12,8 @@ export const ru: Translation = {
   player: {
     after_phrase: "После фразы:",
     modes: {
-      stop: "Стоп",
-      repeat: "Повтор",
+      stop: "Остановить",
+      repeat: "Повторить",
       continue: "Продолжить",
     },
     speed: "Скорость",

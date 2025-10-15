@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Globe } from "lucide-react";
 import { observer } from "mobx-react-lite";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const languages = [
@@ -17,13 +17,15 @@ const languages = [
 
 export const LanguageSwitcher: React.FC = observer(function LanguageSwitcher() {
   const { i18n } = useTranslation();
+  const [lang, setLang] = useState(i18n.language);
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
+    setLang(lng);
   };
 
   const currentLanguage =
-    languages.find((lang) => lang.code === i18n.language) ?? languages[0];
+    languages.find((item) => item.code === lang) ?? languages[0];
 
   return (
     <DropdownMenu>

@@ -23,14 +23,17 @@ export const CurrentSubtitle: React.FC = observer(function CurrentSubtitle() {
         {phrases.currentPhrase?.text}
       </div>
       <div className="flex justify-between items-center mt-1">
-        {phrases.list.length > 0 && (
-          <div className="text-sm italic mt-1">
-            {t("navigation.phrase_counter", {
-              current: phrases.currentIndex + 1,
-              total: phrases.list.length,
-            })}
-          </div>
-        )}
+        <div
+          className={cn(
+            "text-sm italic mt-1",
+            phrases.list.length === 0 && "invisible"
+          )}
+        >
+          {t("navigation.phrase_counter", {
+            current: phrases.currentIndex + 1,
+            total: phrases.list.length,
+          })}
+        </div>
         <Button
           variant="secondary"
           disabled={!phrases.currentPhrase}

@@ -35,7 +35,7 @@ export const PlaybackSpeedSlider: React.FC<Props> = observer(
         ref={ref}
         className={cn("flex flex-col gap-2", props.className)}
       >
-        <div className="text-muted-foreground flex gap-2">
+        <div className="text-muted-foreground flex gap-2 justify-between">
           <span>{t("player.speed")}:</span>
           <span>{speedFormatValue(speed.value)}</span>
         </div>

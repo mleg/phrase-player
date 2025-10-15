@@ -32,9 +32,9 @@ export const PhraseAudioPlayer: React.FC<Props> = observer(
 
         <AudioSelect />
 
-        <AfterPhraseMode />
+        <AfterPhraseMode className="mb-1" />
 
-        <AudioButtons />
+        <AudioButtons className="mb-2 sm:mb-0" />
 
         <CurrentSubtitle />
 
