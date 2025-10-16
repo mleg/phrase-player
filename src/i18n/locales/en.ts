@@ -18,16 +18,12 @@ export const en = {
     normal: "Normal",
   },
   controls: {
-    play: "Play",
-    pause: "Pause",
     copy: "Copy",
-    first: "First",
-    previous: "Previous",
-    next: "Next",
-    last: "Last",
-    repeat_phrase: "Repeat phrase",
   },
   navigation: {
+    links: {
+      help: "https://github.com/mleg/phrase-player#how-to-use",
+    },
     phrase_counter: "{{current}} of {{total}}",
     hotkeys: {
       space: "Space",
