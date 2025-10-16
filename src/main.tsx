@@ -1,7 +1,7 @@
 import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
-import { initI18n } from "./i18n/config";
+import { initI18n } from "./i18n/i18n-config";
 import "./index.css";
 import { createStore } from "./stores/store";
 import { StoreContext } from "./stores/StoreContext";

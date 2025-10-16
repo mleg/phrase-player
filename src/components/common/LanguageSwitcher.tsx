@@ -14,8 +14,18 @@ const languages = [
   { code: "ru", name: "Русский", flag: "🇷🇺" },
 ];
 
+const isSameLang = (code1: string, code2: string) => {
+  const codeLower1 = code1.toLowerCase();
+  const codeLower2 = code2.toLowerCase();
+  return (
+    codeLower1 === codeLower2 ||
+    codeLower1.startsWith(`${codeLower2}-`) ||
+    codeLower2.startsWith(`${codeLower1}-`)
+  );
+};
+
 const findLang = (lang: string) =>
-  languages.find((item) => item.code === lang) ?? languages[0];
+  languages.find((item) => isSameLang(lang, item.code)) ?? languages[0];
 
 export function LanguageSwitcher() {
   const { i18n } = useTranslation();
@@ -51,7 +61,7 @@ export function LanguageSwitcher() {
               {language.flag}
             </span>
             <span>{language.name}</span>
-            {i18n.language === language.code && (
+            {isSameLang(language.code, i18n.language) && (
               <span className="ml-auto text-xs text-muted-foreground">✓</span>
             )}
           </DropdownMenuItem>
