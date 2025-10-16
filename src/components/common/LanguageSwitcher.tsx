@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Globe } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const languages = [
@@ -18,17 +18,13 @@ const findLang = (lang: string) =>
   languages.find((item) => item.code === lang) ?? languages[0];
 
 export function LanguageSwitcher() {
-  const { i18n, ready } = useTranslation();
+  const { i18n } = useTranslation();
   const [lang, setLang] = useState(findLang(i18n.language));
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
     setLang(findLang(lng));
   };
-
-  useEffect(() => {
-    setLang(findLang(i18n.language));
-  }, [ready]);
 
   return (
     <DropdownMenu>

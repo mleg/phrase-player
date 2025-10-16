@@ -9,28 +9,28 @@ const resources = {
   ru: { translation: ru },
 } as const;
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    debug: true,
-    resources,
-    fallbackLng: "en",
+export function initI18n() {
+  return i18n
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    .init({
+      debug: true,
+      resources,
+      fallbackLng: "en",
 
-    interpolation: {
-      escapeValue: false,
-    },
+      interpolation: {
+        escapeValue: false,
+      },
 
-    detection: {
-      order: ["localStorage", "navigator"],
-      caches: ["localStorage"],
-    },
+      detection: {
+        order: ["localStorage", "navigator"],
+        caches: ["localStorage"],
+      },
 
-    react: {
-      useSuspense: false,
-    },
+      react: {
+        useSuspense: true,
+      },
 
-    defaultNS: "translation",
-  });
-
-export default i18n;
+      defaultNS: "translation",
+    });
+}
