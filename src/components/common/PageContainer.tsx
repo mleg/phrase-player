@@ -12,7 +12,7 @@ export const PageContainer: React.FC<ContainerProps> = ({
 }) => {
   return (
     <div
-      className={`max-w-2xl mx-auto py-4 px-4 sm:px-6 lg:px-8 ${className}`}
+      className={`max-w-4xl mx-auto py-4 px-4 sm:px-6 lg:px-8 ${className}`}
       {...props}
     >
       {children}

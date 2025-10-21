@@ -1,0 +1,16 @@
+{
+  "app_title": "Фразовый аудиоплеер",
+  "files_choose_folder": "Выбрать медиа-папку",
+  "files_select_audio": "Выберите аудио файл",
+  "files_no_files": "Файлы не найдены",
+  "player_after_phrase": "После фразы:",
+  "player_modes_stop": "Остановить",
+  "player_modes_repeat": "Повторить",
+  "player_modes_continue": "Продолжить",
+  "player_speed": "Скорость",
+  "player_normal": "Обычная",
+  "controls_copy": "Копировать",
+  "navigation_links_help": "https://github.com/mleg/phrase-player/blob/main/README.ru.md#%D0%BA%D0%B0%D0%BA-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C",
+  "navigation_phrase_counter": "{current} из {total}",
+  "navigation_hotkeys_space": "Пробел"
+}

@@ -1,0 +1,16 @@
+{
+  "app_title": "Phrase Audio Player",
+  "files_choose_folder": "Choose media folder",
+  "files_select_audio": "Select audio file",
+  "files_no_files": "No files found",
+  "player_after_phrase": "After phrase:",
+  "player_modes_stop": "Stop",
+  "player_modes_repeat": "Repeat",
+  "player_modes_continue": "Continue",
+  "player_speed": "Playback speed",
+  "player_normal": "Normal",
+  "controls_copy": "Copy",
+  "navigation_links_help": "https://github.com/mleg/phrase-player#how-to-use",
+  "navigation_phrase_counter": "{current} of {total}",
+  "navigation_hotkeys_space": "Space"
+}
