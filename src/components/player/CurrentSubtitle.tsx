@@ -16,6 +16,8 @@ export const CurrentSubtitle: React.FC = observer(function CurrentSubtitle() {
   return (
     <Card className="p-4">
       <div
+        role="status"
+        aria-label={t("player.current_phrase")}
         className={cn(
           "font-mono whitespace-pre-line leading-[1.5] min-h-[6em]"
         )}

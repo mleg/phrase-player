@@ -20,6 +20,7 @@ export const PhraseRow: React.FC<Props> = observer(function PhraseRow({
 
   return (
     <div
+      role="listitem"
       className={cn("contents cursor-pointer", css.row)}
       onClick={selectPhrase}
     >

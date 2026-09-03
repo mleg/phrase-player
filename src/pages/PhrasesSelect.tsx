@@ -37,6 +37,7 @@ export const PhrasesSelect: React.FC<Props> = observer(function PhrasesSelect(
       </div>
 
       <div
+        role="list"
         className="grid overflow-hidden"
         style={{ gridTemplateColumns: "auto 1fr" }}
       >

@@ -10,6 +10,7 @@ export const ru: Translation = {
     no_files: "Файлы не найдены",
   },
   player: {
+    current_phrase: "Текущая фраза",
     after_phrase: "После фразы:",
     modes: {
       stop: "Остановить",

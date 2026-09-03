@@ -26,6 +26,9 @@ export class PlayerStore {
   public accessor isPlaying = false;
 
   @observable
+  public accessor isSelfStopped = false;
+
+  @observable
   public accessor playFrom: number = 0;
 
   @observable
@@ -69,14 +72,21 @@ export class PlayerStore {
     this.isPlaying = value;
   }
 
+  @action
+  private setSelfStopped(value: boolean) {
+    this.isSelfStopped = value;
+  }
+
   @action.bound
   setMode(value: string) {
     this.mode = value as AfterPhraseAction;
+    this.setSelfStopped(false);
     localStorage.setItem(MODE_SAVE_KEY, value);
   }
 
   private reset() {
     this.setIsPlaying(false);
+    this.setSelfStopped(false);
     this.setPlayFrom(0);
     this.newPlaybackId();
   }
@@ -91,6 +101,7 @@ export class PlayerStore {
 
   private play() {
     this.setIsPlaying(true);
+    this.setSelfStopped(false);
   }
 
   private pause() {
@@ -101,7 +112,15 @@ export class PlayerStore {
   playPhraseAgain = () => {
     this.setPlayFrom(this.phrases.currentStart);
     this.setIsPlaying(true);
+    this.setSelfStopped(false);
     this.newPlaybackId();
+  };
+
+  nextAfterSelfStop = () => {
+    if (this.isSelfStopped && !this.phrases.isNextDisabled) {
+      this.play();
+    }
+    this.phrases.next();
   };
 
   onTimeUpdate = (currentTime: number) => {
@@ -111,6 +130,7 @@ export class PlayerStore {
         case STOP:
           this.setIsPlaying(false);
           this.setPlayFrom(this.phrases.currentStart);
+          this.setSelfStopped(true);
           break;
         case CONTINUE:
           this.phrases.next();

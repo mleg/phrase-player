@@ -8,6 +8,7 @@ export const en = {
     no_files: "No files found",
   },
   player: {
+    current_phrase: "Current phrase",
     after_phrase: "After phrase:",
     modes: {
       stop: "Stop",

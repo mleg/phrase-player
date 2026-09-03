@@ -7,7 +7,7 @@ test.describe("phrase navigation", () => {
   });
 
   test("navigates with buttons", async ({ page }) => {
-    const phrase = page.locator("div.font-mono");
+    const phrase = page.getByRole("status");
     const counter = page.getByText(/\d of 3/);
 
     await expect(phrase).toHaveText("Alpha one");
@@ -40,7 +40,7 @@ test.describe("phrase navigation", () => {
   });
 
   test("navigates with keyboard", async ({ page }) => {
-    const phrase = page.locator("div.font-mono");
+    const phrase = page.getByRole("status");
 
     await pressKey(page, "End");
     await expect(phrase).toHaveText("Alpha three");
@@ -58,13 +58,13 @@ test.describe("phrase navigation", () => {
   test("phrase list opens, selects a phrase, and closes with Escape", async ({
     page,
   }) => {
-    const phrase = page.locator("div.font-mono");
+    const phrase = page.getByRole("status");
     const listHeading = page.getByRole("heading", { name: "lesson.wav" });
 
     await page.getByRole("button", { name: "Phrase list" }).click();
     await expect(listHeading).toBeVisible();
 
-    await page.locator("div.grid").getByText("Alpha two").click();
+    await page.getByRole("listitem").filter({ hasText: "Alpha two" }).click();
     await expect(listHeading).toBeHidden();
     await expect(phrase).toHaveText("Alpha two");
     await expect(page.getByText("2 of 3")).toBeVisible();

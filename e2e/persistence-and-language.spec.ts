@@ -5,7 +5,7 @@ test.describe("utilities and restoration", () => {
     await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
     await page.goto("/");
     await loadMediaFolder(page, "single");
-    await expect(page.locator("div.font-mono")).toHaveText("Alpha one");
+    await expect(page.getByRole("status")).toHaveText("Alpha one");
 
     await page.getByRole("button", { name: "Copy" }).click();
     const clipboard = await page.evaluate(() => navigator.clipboard.readText());
@@ -44,7 +44,7 @@ test.describe("utilities and restoration", () => {
   test("reload restores files, position, mode, and speed", async ({ page }) => {
     await page.goto("/");
     await loadMediaFolder(page, "single");
-    await expect(page.locator("div.font-mono")).toHaveText("Alpha one");
+    await expect(page.getByRole("status")).toHaveText("Alpha one");
 
     await pressKey(page, "ArrowRight");
     await expect(page.getByText("2 of 3")).toBeVisible();
@@ -59,7 +59,7 @@ test.describe("utilities and restoration", () => {
     await page.reload();
 
     await expect(page.getByRole("combobox")).toContainText("lesson.wav");
-    await expect(page.locator("div.font-mono")).toHaveText("Alpha two");
+    await expect(page.getByRole("status")).toHaveText("Alpha two");
     await expect(page.getByText("2 of 3")).toBeVisible();
     await expect(page.getByRole("tab", { name: "Repeat" })).toHaveAttribute(
       "aria-selected",

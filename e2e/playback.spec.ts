@@ -1,4 +1,11 @@
-import { expect, test, loadMediaFolder, pressKey, seekTo } from "./helpers";
+import {
+  expect,
+  expectMediaCommand,
+  loadMediaFolder,
+  pressKey,
+  seekTo,
+  test,
+} from "./helpers";
 
 test.describe("playback and speed", () => {
   test.beforeEach(async ({ page }) => {
@@ -9,27 +16,31 @@ test.describe("playback and speed", () => {
   test("replay, play, pause, Space, and P control playback", async ({
     page,
   }) => {
-    await page.getByRole("button", { name: "Replay phrase" }).click();
+    await expectMediaCommand(page, "play", () =>
+      page.getByRole("button", { name: "Replay phrase" }).click()
+    );
     await expect(
       page.getByRole("button", { name: "Pause", exact: true })
     ).toBeVisible();
 
-    await page.getByRole("button", { name: "Pause", exact: true }).click();
+    await expectMediaCommand(page, "pause", () =>
+      page.getByRole("button", { name: "Pause", exact: true }).click()
+    );
     await expect(
       page.getByRole("button", { name: "Play", exact: true })
     ).toBeVisible();
 
-    await pressKey(page, "Space");
+    await expectMediaCommand(page, "play", () => pressKey(page, "Space"));
     await expect(
       page.getByRole("button", { name: "Pause", exact: true })
     ).toBeVisible();
 
-    await pressKey(page, "p");
+    await expectMediaCommand(page, "pause", () => pressKey(page, "p"));
     await expect(
       page.getByRole("button", { name: "Play", exact: true })
     ).toBeVisible();
 
-    await pressKey(page, "p");
+    await expectMediaCommand(page, "play", () => pressKey(page, "p"));
     await expect(
       page.getByRole("button", { name: "Pause", exact: true })
     ).toBeVisible();
@@ -62,20 +73,24 @@ test.describe("playback and speed", () => {
   });
 
   test("after-phrase modes stop, repeat, and continue", async ({ page }) => {
-    // STOP: reaching the phrase end stops playback.
-    await page.getByRole("button", { name: "Replay phrase" }).click();
+    // STOP: reaching the phrase end pauses playback.
+    await expectMediaCommand(page, "play", () =>
+      page.getByRole("button", { name: "Replay phrase" }).click()
+    );
     await expect(
       page.getByRole("button", { name: "Pause", exact: true })
     ).toBeVisible();
-    await seekTo(page, 2);
+    await expectMediaCommand(page, "pause", () => seekTo(page, 2));
     await expect(
       page.getByRole("button", { name: "Play", exact: true })
     ).toBeVisible();
 
-    // REPEAT: the phrase restarts from its beginning.
+    // REPEAT: the phrase restarts from its beginning and plays on.
     await page.getByRole("tab", { name: "Repeat" }).click();
-    await page.getByRole("button", { name: "Replay phrase" }).click();
-    await seekTo(page, 2);
+    await expectMediaCommand(page, "play", () =>
+      page.getByRole("button", { name: "Replay phrase" }).click()
+    );
+    await expectMediaCommand(page, "play", () => seekTo(page, 2));
     await expect
       .poll(() =>
         page.evaluate(() => document.querySelector("audio")?.currentTime ?? -1)
@@ -88,10 +103,46 @@ test.describe("playback and speed", () => {
     // CONTINUE: reaching the end moves to the next phrase.
     await page.getByRole("tab", { name: "Continue" }).click();
     await seekTo(page, 2);
-    await expect(page.locator("div.font-mono")).toHaveText("Alpha two");
+    await expect(page.getByRole("status")).toHaveText("Alpha two");
     await expect(page.getByText("2 of 3")).toBeVisible();
     await seekTo(page, 4);
-    await expect(page.locator("div.font-mono")).toHaveText("Alpha three");
+    await expect(page.getByRole("status")).toHaveText("Alpha three");
     await expect(page.getByText("3 of 3")).toBeVisible();
+  });
+
+  test("ArrowRight resumes after a self-stop but not after a user pause", async ({
+    page,
+  }) => {
+    // Self-stop: playback halts on its own at the phrase end.
+    await expectMediaCommand(page, "play", () =>
+      page.getByRole("button", { name: "Replay phrase" }).click()
+    );
+    await expectMediaCommand(page, "pause", () => seekTo(page, 2));
+
+    // ArrowRight advances and resumes playback.
+    await expectMediaCommand(page, "play", () => pressKey(page, "ArrowRight"));
+    await expect(page.getByText("2 of 3")).toBeVisible();
+
+    // User pause: ArrowRight advances but stays paused.
+    await expectMediaCommand(page, "pause", () => pressKey(page, "p"));
+    await expect(
+      page.getByRole("button", { name: "Play", exact: true })
+    ).toBeVisible();
+    await pressKey(page, "ArrowRight");
+    await expect(page.getByText("3 of 3")).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Play", exact: true })
+    ).toBeVisible();
+
+    // Self-stop on the last phrase: ArrowRight is a no-op.
+    await expectMediaCommand(page, "play", () =>
+      page.getByRole("button", { name: "Replay phrase" }).click()
+    );
+    await expectMediaCommand(page, "pause", () => seekTo(page, 10));
+    await pressKey(page, "ArrowRight");
+    await expect(page.getByText("3 of 3")).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Play", exact: true })
+    ).toBeVisible();
   });
 });

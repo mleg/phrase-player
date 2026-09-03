@@ -43,7 +43,7 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
     (e) => {
       e.preventDefault();
       e.stopPropagation();
-      phrases.next();
+      player.nextAfterSelfStop();
     },
     {
       enabled: !player.speed.modal.visible,
@@ -113,8 +113,7 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
       <ControlButton
         aria-label={t("controls.next")}
         disabled={phrases.isNextDisabled}
-        onClick={phrases.next}
-        className="order-7"
+        onClick={player.nextAfterSelfStop}
         hotkey="⇾"
       >
         <ChevronRight />

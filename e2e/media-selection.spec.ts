@@ -17,7 +17,7 @@ test.describe("media selection", () => {
     const audioSelect = page.getByRole("combobox");
     await expect(audioSelect).toBeEnabled();
     await expect(audioSelect).toContainText("lesson.wav");
-    await expect(page.locator("div.font-mono")).toHaveText("Alpha one");
+    await expect(page.getByRole("status")).toHaveText("Alpha one");
     await expect(page.getByText("1 of 3")).toBeVisible();
   });
 
@@ -33,11 +33,11 @@ test.describe("media selection", () => {
 
     await audioSelect.click();
     await page.getByRole("option", { name: "lesson-a.wav" }).click();
-    await expect(page.locator("div.font-mono")).toHaveText("Alpha one");
+    await expect(page.getByRole("status")).toHaveText("Alpha one");
 
     await audioSelect.click();
     await page.getByRole("option", { name: "lesson-b.wav" }).click();
-    await expect(page.locator("div.font-mono")).toHaveText("Bravo one");
+    await expect(page.getByRole("status")).toHaveText("Bravo one");
     await expect(page.getByText("1 of 3")).toBeVisible();
   });
 });

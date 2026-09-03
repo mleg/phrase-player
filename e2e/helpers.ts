@@ -7,18 +7,29 @@ const FIXTURES_DIR = path.join(fileURLToPath(new URL("./fixtures", import.meta.u
 const fixtureDir = (name: string) => path.join(FIXTURES_DIR, name);
 
 /**
- * The audio element is an external boundary: play/pause become no-ops and the
- * media clock is driven deterministically through window.__seek(time), which
- * sets currentTime and dispatches timeupdate. The file-loading path itself
- * uses real WAV/SRT fixtures.
+ * The audio element is an external boundary: play/pause are stubbed and the
+ * latest command is recorded on window.__media ({state, seq}) so tests can
+ * observe that the app commands playback without counting calls. The media
+ * clock is driven deterministically through window.__seek(time), which sets
+ * currentTime and dispatches timeupdate. File loading uses real WAV/SRT
+ * fixtures.
  */
 export const test = base.extend({
-  page: async ({ page }, use) => {
+  page: async ({ page }, run) => {
     await page.addInitScript(() => {
+      const media = { state: "paused", seq: 0 };
+      Object.defineProperty(window, "__media", {
+        value: media,
+      });
       HTMLMediaElement.prototype.play = function play() {
+        media.state = "playing";
+        media.seq += 1;
         return Promise.resolve();
       };
-      HTMLMediaElement.prototype.pause = function pause() {};
+      HTMLMediaElement.prototype.pause = function pause() {
+        media.state = "paused";
+        media.seq += 1;
+      };
       Object.defineProperty(window, "__seek", {
         value: (time: number) => {
           const audio = document.querySelector("audio");
@@ -31,20 +42,52 @@ export const test = base.extend({
       });
     });
     await page.route(/^https?:\/\/(?!localhost)/, (route) => route.abort());
-    await use(page);
+    await run(page);
   },
 });
 
 export { expect };
 
 export async function loadMediaFolder(page: Page, fixture: string) {
-  await page.locator("#folder-input").setInputFiles(fixtureDir(fixture));
+  await page
+    .getByLabel("Choose media folder")
+    .setInputFiles(fixtureDir(fixture));
 }
 
 export async function seekTo(page: Page, time: number) {
   await page.evaluate((t) => {
     (window as unknown as { __seek(time: number): void }).__seek(t);
   }, time);
+}
+
+/**
+ * Run the action and assert that the app commands play or pause at least
+ * once because of it: the media-seam sequence must advance past the value
+ * captured before the action, and the recorded state must match.
+ */
+export async function expectMediaCommand(
+  page: Page,
+  command: "play" | "pause",
+  action: () => Promise<void>
+) {
+  const before = await page.evaluate(
+    () => (window as unknown as { __media: { seq: number } }).__media.seq
+  );
+  await action();
+  const expected = command === "play" ? "playing" : "paused";
+  await expect
+    .poll(() =>
+      page.evaluate(
+        (floor) => {
+          const media = (
+            window as unknown as { __media: { state: string; seq: number } }
+          ).__media;
+          return media.seq > floor ? media.state : null;
+        },
+        before
+      )
+    )
+    .toBe(expected);
 }
 
 /** Press a key with no focused control, so hotkeys act alone. */
