@@ -75,6 +75,7 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
       )}
     >
       <ControlButton
+        aria-label={t("controls.first")}
         disabled={phrases.isPrevDisabled}
         onClick={phrases.first}
         hotkey="Home"
@@ -83,47 +84,53 @@ export const AudioButtons: React.FC<Props> = observer(function AudioButtons(
         <ChevronFirst />
       </ControlButton>
       <ControlButton
+        aria-label={t("controls.previous")}
         disabled={phrases.isPrevDisabled}
         onClick={phrases.prev}
-        hotkey="⇽"
         className="order-1"
+        hotkey="⇽"
       >
         <ChevronLeft />
       </ControlButton>
       <ControlButton
+        aria-label={t("controls.replay")}
         disabled={!phrases.playbackEnabled}
         onClick={player.playPhraseAgain}
-        hotkey={t("navigation.hotkeys.space")}
         className="order-3"
+        hotkey={t("navigation.hotkeys.space")}
       >
         <Repeat1 />
       </ControlButton>
       <ControlButton
+        aria-label={player.isPlaying ? t("controls.pause") : t("controls.play")}
         disabled={!phrases.playbackEnabled}
         onClick={player.togglePlay}
-        hotkey="P"
         className="order-5"
+        hotkey="P"
       >
         {player.isPlaying ? <Pause /> : <Play />}
       </ControlButton>
       <ControlButton
+        aria-label={t("controls.next")}
         disabled={phrases.isNextDisabled}
         onClick={phrases.next}
-        hotkey="⇾"
         className="order-7"
+        hotkey="⇾"
       >
         <ChevronRight />
       </ControlButton>
       <ControlButton
+        aria-label={t("controls.last")}
         disabled={phrases.isNextDisabled}
         onClick={phrases.last}
-        hotkey="End"
         className="order-8"
+        hotkey="End"
       >
         <ChevronLast />
       </ControlButton>
       <PlaybackSpeedSelect className="order-6 sm:order-none" />
       <ControlButton
+        aria-label={t("controls.phrase_list")}
         disabled={phrases.list.length === 0}
         onClick={phrases.select.show}
         className="order-4"

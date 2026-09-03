@@ -19,6 +19,15 @@ export const en = {
   },
   controls: {
     copy: "Copy",
+    first: "First phrase",
+    previous: "Previous phrase",
+    replay: "Replay phrase",
+    play: "Play",
+    pause: "Pause",
+    next: "Next phrase",
+    last: "Last phrase",
+    phrase_list: "Phrase list",
+    help: "Help",
   },
   navigation: {
     links: {

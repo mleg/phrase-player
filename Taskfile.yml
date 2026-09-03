@@ -1,0 +1,54 @@
+version: "3"
+
+tasks:
+  dev:
+    desc: Start Vite for normal development
+    cmds:
+      - npm run start
+
+  build:
+    desc: Type-check and build the application
+    cmds:
+      - npm run build
+
+  lint:
+    desc: Run ESLint
+    cmds:
+      - npm run lint
+
+  typecheck:
+    desc: Run TypeScript without emitting files
+    cmds:
+      - npm run typecheck
+
+  test:install:
+    desc: Install the Playwright Chromium binary
+    cmds:
+      - npx playwright install chromium
+
+  test:
+    desc: Run the full browser suite headlessly
+    cmds:
+      - npx playwright test
+
+  test:headed:
+    desc: Run the suite with a visible browser
+    cmds:
+      - npx playwright test --headed
+
+  test:ui:
+    desc: Open Playwright UI mode
+    cmds:
+      - npx playwright test --ui
+
+  test:debug:
+    desc: Run with the Playwright inspector
+    cmds:
+      - npx playwright test --debug
+
+  check:
+    desc: Run lint, typecheck, and the browser suite locally
+    cmds:
+      - task: lint
+      - task: typecheck
+      - task: test

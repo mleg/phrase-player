@@ -21,6 +21,15 @@ export const ru: Translation = {
   },
   controls: {
     copy: "Копировать",
+    first: "Первая фраза",
+    previous: "Предыдущая фраза",
+    replay: "Повторить фразу",
+    play: "Воспроизвести",
+    pause: "Пауза",
+    next: "Следующая фраза",
+    last: "Последняя фраза",
+    phrase_list: "Список фраз",
+    help: "Справка",
   },
   navigation: {
     links: {

@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const IconLarge: React.FC<Props> = observer(function IconLarge(props) {
-  const icon: any = props.children;
+  const icon = props.children as ReactElement<{ className?: string }>;
   return cloneElement(icon, {
     className: cn(icon.props.className, "size-6 stroke-3", props.className),
   });

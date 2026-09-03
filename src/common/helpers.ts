@@ -15,7 +15,7 @@ export function enumFromUnion<T extends string | number | symbol>(
 ): EnumLike<T> {
   const obj: EnumLike<T> = {} as EnumLike<T>;
   for (const key of keys) {
-    // @ts-ignore
+    // @ts-expect-error generic mapped-type assignment is not representable here
     obj[key] = key;
   }
   return obj as EnumLike<T>;

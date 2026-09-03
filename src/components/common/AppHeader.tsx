@@ -15,7 +15,12 @@ export const AppHeader: React.FC = observer(function AppHeader() {
       <div className="flex items-center justify-center ml-auto gap-1">
         <GithubLink />
         <Button size="icon-sm" variant="ghost" asChild>
-          <a href={t("navigation.links.help")} target="_blank" rel="noreferrer">
+          <a
+            href={t("navigation.links.help")}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={t("controls.help")}
+          >
             <CircleQuestionMark className="size-7" />
           </a>
         </Button>
