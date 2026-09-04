@@ -26,7 +26,7 @@ export class PlayerStore {
   public accessor isPlaying = false;
 
   @observable
-  public accessor isSelfStopped = false;
+  private accessor isSelfStopped = false;
 
   @observable
   public accessor playFrom: number = 0;
@@ -106,6 +106,7 @@ export class PlayerStore {
 
   private pause() {
     this.setIsPlaying(false);
+    this.setSelfStopped(false);
     this.setPlayFrom(this.currentTime);
   }
 
@@ -116,7 +117,11 @@ export class PlayerStore {
     this.newPlaybackId();
   };
 
-  nextAfterSelfStop = () => {
+  /**
+   * Advance to the next phrase. Resumes playback when the current pause is a
+   * self-stop, so the learner keeps listening hands-free.
+   */
+  nextPhrase = () => {
     if (this.isSelfStopped && !this.phrases.isNextDisabled) {
       this.play();
     }

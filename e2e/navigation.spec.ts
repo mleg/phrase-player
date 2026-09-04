@@ -1,4 +1,10 @@
-import { expect, test, loadMediaFolder, pressKey } from "./helpers";
+import {
+  currentPhrase,
+  expect,
+  loadMediaFolder,
+  pressKey,
+  test,
+} from "./helpers";
 
 test.describe("phrase navigation", () => {
   test.beforeEach(async ({ page }) => {
@@ -7,7 +13,7 @@ test.describe("phrase navigation", () => {
   });
 
   test("navigates with buttons", async ({ page }) => {
-    const phrase = page.getByRole("status");
+    const phrase = currentPhrase(page);
     const counter = page.getByText(/\d of 3/);
 
     await expect(phrase).toHaveText("Alpha one");
@@ -40,7 +46,7 @@ test.describe("phrase navigation", () => {
   });
 
   test("navigates with keyboard", async ({ page }) => {
-    const phrase = page.getByRole("status");
+    const phrase = currentPhrase(page);
 
     await pressKey(page, "End");
     await expect(phrase).toHaveText("Alpha three");
@@ -58,7 +64,7 @@ test.describe("phrase navigation", () => {
   test("phrase list opens, selects a phrase, and closes with Escape", async ({
     page,
   }) => {
-    const phrase = page.getByRole("status");
+    const phrase = currentPhrase(page);
     const listHeading = page.getByRole("heading", { name: "lesson.wav" });
 
     await page.getByRole("button", { name: "Phrase list" }).click();

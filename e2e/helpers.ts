@@ -41,7 +41,10 @@ export const test = base.extend({
         },
       });
     });
-    await page.route(/^https?:\/\/(?!localhost)/, (route) => route.abort());
+    await page.route(
+      /^https?:\/\/(?!localhost|127\.0\.0\.1)/,
+      (route) => route.abort()
+    );
     await run(page);
   },
 });
@@ -58,6 +61,11 @@ export async function seekTo(page: Page, time: number) {
   await page.evaluate((t) => {
     (window as unknown as { __seek(time: number): void }).__seek(t);
   }, time);
+}
+
+/** The current phrase element, addressed by its localized accessible name. */
+export function currentPhrase(page: Page) {
+  return page.getByRole("status", { name: /Current phrase|Текущая фраза/ });
 }
 
 /**

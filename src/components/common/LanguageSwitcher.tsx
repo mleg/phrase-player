@@ -28,7 +28,7 @@ const findLang = (lang: string) =>
   languages.find((item) => isSameLang(lang, item.code)) ?? languages[0];
 
 export function LanguageSwitcher() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [lang, setLang] = useState(findLang(i18n.language));
 
   const changeLanguage = (lng: string) => {
@@ -39,7 +39,12 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon-sm" className="relative">
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          className="relative"
+          aria-label={t("controls.language")}
+        >
           <Globe className="size-7" />
           <span
             role="img"

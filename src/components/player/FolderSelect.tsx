@@ -27,6 +27,7 @@ export const FolderSelect: React.FC = observer(function FolderSelect() {
         type="file"
         webkitdirectory="true"
         multiple
+        aria-label={t("files.choose_folder")}
         onChange={onFolderSelect}
         className="hidden"
       />

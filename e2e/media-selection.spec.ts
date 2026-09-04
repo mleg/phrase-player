@@ -1,4 +1,4 @@
-import { expect, test, loadMediaFolder } from "./helpers";
+import { currentPhrase, expect, loadMediaFolder, test } from "./helpers";
 
 test.describe("media selection", () => {
   test("empty player disables actions; a single pair auto-selects", async ({
@@ -17,7 +17,7 @@ test.describe("media selection", () => {
     const audioSelect = page.getByRole("combobox");
     await expect(audioSelect).toBeEnabled();
     await expect(audioSelect).toContainText("lesson.wav");
-    await expect(page.getByRole("status")).toHaveText("Alpha one");
+    await expect(currentPhrase(page)).toHaveText("Alpha one");
     await expect(page.getByText("1 of 3")).toBeVisible();
   });
 
@@ -33,11 +33,11 @@ test.describe("media selection", () => {
 
     await audioSelect.click();
     await page.getByRole("option", { name: "lesson-a.wav" }).click();
-    await expect(page.getByRole("status")).toHaveText("Alpha one");
+    await expect(currentPhrase(page)).toHaveText("Alpha one");
 
     await audioSelect.click();
     await page.getByRole("option", { name: "lesson-b.wav" }).click();
-    await expect(page.getByRole("status")).toHaveText("Bravo one");
+    await expect(currentPhrase(page)).toHaveText("Bravo one");
     await expect(page.getByText("1 of 3")).toBeVisible();
   });
 });

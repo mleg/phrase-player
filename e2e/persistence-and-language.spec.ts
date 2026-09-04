@@ -1,11 +1,17 @@
-import { expect, test, loadMediaFolder, pressKey } from "./helpers";
+import {
+  currentPhrase,
+  expect,
+  loadMediaFolder,
+  pressKey,
+  test,
+} from "./helpers";
 
 test.describe("utilities and restoration", () => {
   test("copies the current phrase to the clipboard", async ({ page }) => {
     await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
     await page.goto("/");
     await loadMediaFolder(page, "single");
-    await expect(page.getByRole("status")).toHaveText("Alpha one");
+    await expect(currentPhrase(page)).toHaveText("Alpha one");
 
     await page.getByRole("button", { name: "Copy" }).click();
     const clipboard = await page.evaluate(() => navigator.clipboard.readText());
@@ -15,7 +21,7 @@ test.describe("utilities and restoration", () => {
   test("switching to Russian translates the interface", async ({ page }) => {
     await page.goto("/");
 
-    await page.getByRole("button", { name: "language" }).click();
+    await page.getByRole("button", { name: /Language|Язык/ }).click();
     await page.getByRole("menuitem", { name: /Русский/ }).click();
 
     await expect(page.getByText("Выбрать медиа-папку")).toBeVisible();
@@ -44,7 +50,7 @@ test.describe("utilities and restoration", () => {
   test("reload restores files, position, mode, and speed", async ({ page }) => {
     await page.goto("/");
     await loadMediaFolder(page, "single");
-    await expect(page.getByRole("status")).toHaveText("Alpha one");
+    await expect(currentPhrase(page)).toHaveText("Alpha one");
 
     await pressKey(page, "ArrowRight");
     await expect(page.getByText("2 of 3")).toBeVisible();
@@ -59,7 +65,7 @@ test.describe("utilities and restoration", () => {
     await page.reload();
 
     await expect(page.getByRole("combobox")).toContainText("lesson.wav");
-    await expect(page.getByRole("status")).toHaveText("Alpha two");
+    await expect(currentPhrase(page)).toHaveText("Alpha two");
     await expect(page.getByText("2 of 3")).toBeVisible();
     await expect(page.getByRole("tab", { name: "Repeat" })).toHaveAttribute(
       "aria-selected",

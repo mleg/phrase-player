@@ -1,4 +1,5 @@
 import {
+  currentPhrase,
   expect,
   expectMediaCommand,
   loadMediaFolder,
@@ -28,6 +29,13 @@ test.describe("playback and speed", () => {
     );
     await expect(
       page.getByRole("button", { name: "Play", exact: true })
+    ).toBeVisible();
+
+    await expectMediaCommand(page, "play", () =>
+      page.getByRole("button", { name: "Play", exact: true }).click()
+    );
+    await expect(
+      page.getByRole("button", { name: "Pause", exact: true })
     ).toBeVisible();
 
     await expectMediaCommand(page, "play", () => pressKey(page, "Space"));
@@ -103,10 +111,10 @@ test.describe("playback and speed", () => {
     // CONTINUE: reaching the end moves to the next phrase.
     await page.getByRole("tab", { name: "Continue" }).click();
     await seekTo(page, 2);
-    await expect(page.getByRole("status")).toHaveText("Alpha two");
+    await expect(currentPhrase(page)).toHaveText("Alpha two");
     await expect(page.getByText("2 of 3")).toBeVisible();
     await seekTo(page, 4);
-    await expect(page.getByRole("status")).toHaveText("Alpha three");
+    await expect(currentPhrase(page)).toHaveText("Alpha three");
     await expect(page.getByText("3 of 3")).toBeVisible();
   });
 

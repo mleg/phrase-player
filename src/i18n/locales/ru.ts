@@ -30,6 +30,7 @@ export const ru: Translation = {
     next: "Следующая фраза",
     last: "Последняя фраза",
     phrase_list: "Список фраз",
+    language: "Язык",
     help: "Справка",
   },
   navigation: {

@@ -28,6 +28,7 @@ export const en = {
     next: "Next phrase",
     last: "Last phrase",
     phrase_list: "Phrase list",
+    language: "Language",
     help: "Help",
   },
   navigation: {
